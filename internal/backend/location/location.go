@@ -2,6 +2,7 @@
 package location
 
 import (
+	"github.com/restic/restic/internal/backend/qs"
 	"strings"
 
 	"github.com/restic/restic/internal/backend/azure"
@@ -41,6 +42,7 @@ var parsers = []parser{
 	{"swift", swift.ParseConfig, noPassword},
 	{"rest", rest.ParseConfig, rest.StripPassword},
 	{"rclone", rclone.ParseConfig, noPassword},
+	{"qs", qs.ParseConfig, noPassword},
 }
 
 // noPassword returns the repository location unchanged (there's no sensitive information there)

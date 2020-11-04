@@ -4,6 +4,7 @@ import (
 	"bufio"
 	"context"
 	"fmt"
+	"github.com/restic/restic/internal/backend/qs"
 	"io"
 	"os"
 	"path/filepath"
@@ -652,6 +653,15 @@ func parseConfig(loc location.Location, opts options.Options) (interface{}, erro
 
 		debug.Log("opening rest repository at %#v", cfg)
 		return cfg, nil
+
+	case "qs":
+		cfg := loc.Config.(qs.Config)
+		if err := opts.Apply(loc.Scheme, &cfg); err != nil {
+			return nil, err
+		}
+
+		debug.Log("opening qs repository at %#v", cfg)
+		return cfg, nil
 	}
 
 	return nil, errors.Fatalf("invalid backend: %q", loc.Scheme)
@@ -771,6 +781,8 @@ func create(s string, opts options.Options) (restic.Backend, error) {
 		return rest.Create(globalOptions.ctx, cfg.(rest.Config), rt)
 	case "rclone":
 		return rclone.Create(globalOptions.ctx, cfg.(rclone.Config))
+	case "qs":
+		return qs.Create(cfg.(qs.Config))
 	}
 
 	debug.Log("invalid repository scheme: %v", s)
