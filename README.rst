@@ -131,3 +131,6 @@ Storage are sponsored by `AppsCode <https://appscode.com>`__!
    :target: https://appscode.com
 .. |Reviewed by Hound| image:: https://img.shields.io/badge/Reviewed_by-Hound-8E64B0.svg
    :target: https://houndci.com
+
+GO111MODULE=on CGO_LDFLAGS_ALLOW=".*" CGO_CFFLAGS_ALLOW=".*" go build -o /home/adongre/go/src/github.com/davinash/restic/restic ./cmd/restic
+QS_DEVICE_TYPE="FILESYSTEM_DEVICE" LD_LIBRARY_PATH=/home/adongre/go/src/github.com/davinash/restic/internal/backend/qs/rdamanagement/lib/linux/64 ./restic -r qs:user@10.10.20.30:/StorageGroup/Container init

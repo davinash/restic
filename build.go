@@ -138,8 +138,10 @@ func build(cwd string, env map[string]string, args ...string) error {
 	if enablePIE {
 		a = append(a, "-buildmode=pie")
 	}
-
+	a = append(a, "CGO_LDFLAGS_ALLOW=\".*\" CGO_CFFLAGS_ALLOW=\".*\"")
 	a = append(a, args...)
+
+	fmt.Println(a)
 	cmd := exec.Command("go", a...)
 	cmd.Env = os.Environ()
 	for k, v := range env {
@@ -158,6 +160,7 @@ func build(cwd string, env map[string]string, args ...string) error {
 	verbosePrintf("chdir %q\n", cwd)
 	verbosePrintf("go %q\n", a)
 
+	fmt.Println(cmd)
 	return cmd.Run()
 }
 
